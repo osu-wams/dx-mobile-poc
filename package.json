@@ -1,0 +1,67 @@
+{
+  "name": "dx-mobile",
+  "version": "0.1.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "lint": "eslint ./**/*.{ts,tsx} --max-warnings=0 --format=codeframe"
+  },
+  "dependencies": {
+    "@osu-wams/lib": "file:../dx-monorepo/packages/lib",
+    "axios": "^0.19.1",
+    "expo": "~36.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-screens": "2.0.0-alpha.12",
+    "react-native-web": "~0.11.7",
+    "typescript": "~3.7.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-native": "~0.60.23",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
+    "babel-eslint": "10.0.3",
+    "babel-preset-expo": "~8.0.0",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "6.6.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-config-react-app": "^5.1.0",
+    "eslint-config-xo": "^0.27.2",
+    "eslint-config-xo-react": "^0.22.0",
+    "eslint-plugin-flowtype": "^3.6.1",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest-dom": "^1.4.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "husky": "^4.0.0",
+    "jest-prop-type-error": "^1.1.0",
+    "prettier": "^1.16.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/setupTests.{js,jsx,ts,tsx}",
+      "!src/index.{js,jsx,ts,tsx}",
+      "!src/serviceWorker.{js,jsx,ts,tsx}",
+      "!src/**/*.(spec|test|stories).{js,jsx,ts,tsx}"
+    ]
+  }
+}
