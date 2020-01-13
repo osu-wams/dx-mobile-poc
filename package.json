@@ -11,6 +11,10 @@
     "eject": "expo eject",
     "lint": "eslint ./**/*.{ts,tsx} --max-warnings=0 --format=codeframe"
   },
+  "dependencies_COMMENT": {
+    "note": "This is a placeholder for libs that should come from published @osu-wams npm organization, replace the matching lines in dependencies below.",
+    "@osu-wams/lib": "^0.0.1"
+  },
   "dependencies": {
     "@osu-wams/lib": "file:../dx-monorepo/packages/lib",
     "axios": "^0.19.1",
