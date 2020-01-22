@@ -5,7 +5,8 @@ import {
   ScrollView,
   View,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  ImageBackground
 } from 'react-native';
 import { Svg, Use, Image } from 'react-native-svg';
 import HTML from 'react-native-render-html';
@@ -20,13 +21,15 @@ import {
   faChevronDown,
   faClipboardListCheck,
   faAnalytics,
-  faExternalLink
+  faExternalLink,
+  faArchway,
+  faAbacus,
+  faMoneyBillAlt
 } from '@fortawesome/pro-light-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
-import { WebBrowser, Linking } from 'expo';
+import { Linking } from 'expo';
 // import WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import Logo from './assets/osu-logo.svg';
@@ -63,6 +66,9 @@ const BetaPage = ({ navigation }) => {
   </div>`;
   return (
     <Body>
+      <TopWrapper>
+        <Logo height={45} width={140} />
+      </TopWrapper>
       {fontLoaded && <Header>Beta</Header>}
       <CardBase>
         <CardHeaderWrapper>
@@ -94,6 +100,7 @@ const BetaPage = ({ navigation }) => {
           <Text>Check back here for spicy release notes.</Text>
         </CardBodyWrapper>
       </CardBase>
+      <Events />
       {/* <Nav navigation={navigation} /> */}
     </Body>
   );
@@ -101,6 +108,8 @@ const BetaPage = ({ navigation }) => {
 
 const Home = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const toggleExpanded = () => setExpanded(!expanded);
   useEffect(() => {
     Font.loadAsync({
       stratum: require('./assets/fonts/Stratum2-Bold.otf')
@@ -141,12 +150,43 @@ const Home = () => {
           <FontAwesomeIcon icon={faClipboardListCheck} size={24} />
           <CardTitle>IT System Status</CardTitle>
         </CardHeaderWrapper>
-        <CardBodyWrapper expanded='true' style={{ textAlign: 'center' }}>
-          <Systems height={160} width={160} />
+        <CardBodyWrapper expanded='true'>
+          <CardBodyCenter>
+            <Systems height={160} width={160} />
 
-          <Text>All IT systems operating normally</Text>
+            <Text>All IT systems operating normally</Text>
+          </CardBodyCenter>
         </CardBodyWrapper>
       </CardBase>
+      <CardBase>
+        <CardHeaderWrapper>
+          <FontAwesomeIcon icon={faCogs} size={24} />
+          <CardTitle>Featured Resources</CardTitle>
+          <ExpandButton onPress={() => toggleExpanded()}>
+            <FontAwesomeIcon
+              icon={expanded ? faChevronUp : faChevronDown}
+              size={16}
+              color={'#888'}
+            />
+          </ExpandButton>
+        </CardHeaderWrapper>
+
+        <CardBodyWrapper expanded={expanded}>
+          <CardHeaderWrapper>
+            <FontAwesomeIcon icon={faArchway} size={24} />
+            <CardTitle>Featured Resource # 1</CardTitle>
+          </CardHeaderWrapper>
+          <CardHeaderWrapper>
+            <FontAwesomeIcon icon={faAbacus} size={24} />
+            <CardTitle>Arch resource</CardTitle>
+          </CardHeaderWrapper>
+          <CardHeaderWrapper>
+            <FontAwesomeIcon icon={faMoneyBillAlt} size={24} />
+            <CardTitle>Another resource here</CardTitle>
+          </CardHeaderWrapper>
+        </CardBodyWrapper>
+      </CardBase>
+      <Events />
     </Body>
   );
 };
@@ -197,16 +237,46 @@ const TabNavigator = createBottomTabNavigator(
     }
   }
 );
+const Events = () => {
+  const events = [
+    {
+      link: 'https://events.oregonstate.edu/event/speed_friending_1305',
+      bg_image:
+        'https://images.localist.com/photos/32361869174400/huge/66dfef8e021b16f04402e73e37958b49ba0adfef.jpg',
+      date: '2020-01-16T19:00:00-08:00',
+      id: 32361869064560,
+      title: 'Speed Friending',
+      type: 'localist'
+    },
+    {
+      link: 'https://events.oregonstate.edu/event/mlk_jr_day_of_service',
+      bg_image:
+        'https://images.localist.com/photos/32053426158987/huge/358f2bf7b08a364415d54937905b58f71e48a9e4.jpg',
+      date: '2020-01-18T08:00:00-08:00',
+      id: 32053426013525,
+      title: 'MLK Jr. Day of Service',
+      type: 'localist'
+    },
+    {
+      link:
+        'https://events.oregonstate.edu/event/38th_annual_dr_martin_luther_king_jr_keynote_session',
+      bg_image:
+        'https://images.localist.com/photos/32063498358811/huge/e389013cf7d8b196b5c47426955c84ca7c683c65.jpg',
+      date: '2020-01-20T11:00:00-08:00',
+      id: 32063533697710,
+      title: '38th annual Dr. Martin Luther King, Jr. Keynote Session',
+      type: 'localist'
+    }
+  ];
 
-// const AppNavigator = createStackNavigator(
-//   {
-//     Home: Home,
-//     Beta: BetaPage
-//   },
-//   {
-//     initialRouteName: 'Home'
-//   }
-// );
+  return (
+    <>
+      {events.map(e => (
+        <EventCard itemContent={e} key={e.id} />
+      ))}
+    </>
+  );
+};
 
 export default createAppContainer(TabNavigator);
 
@@ -276,6 +346,10 @@ const CardBody = styled.View`
   overflow: hidden;
 `;
 
+const CardBodyCenter = styled.View`
+  align-items: center;
+`;
+
 const CardBody2Col = styled.View`
   flex-direction: row;
   align-items: flex-start;
@@ -314,3 +388,60 @@ const CardBodyTitle = styled.Text`
   color: ${osu};
   font-size: 18px;
 `;
+
+const EventCardBody = styled.View`
+  :link,
+  :visited,
+  :hover,
+  :active {
+    text-decoration: none;
+  }
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  flex: 2;
+  text-align: left;
+  justify-content: center;
+`;
+
+const EventCardLargeTitle = styled.Text`
+  color: #fff;
+  background-color: 'rgba(0, 0, 0, 0.5)';
+  padding: 20px 10px;
+  border-radius: 8px;
+  font-size: 24px;
+  font-weight: 300;
+  text-align: center;
+`;
+
+const EventCardContent = ({ item }) => {
+  return (
+    <EventCardBody>
+      <EventCardLargeTitle>{item.title}</EventCardLargeTitle>
+    </EventCardBody>
+  );
+};
+
+const EventCard = ({ itemContent }) => {
+  return (
+    <View
+      style={{
+        height: 300,
+        width: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        marginBottom: 10,
+        borderRadius: 10
+      }}
+    >
+      <ImageBackground
+        source={{ uri: itemContent.bg_image }}
+        style={{
+          width: '100%',
+          height: '100%'
+        }}
+      >
+        <EventCardContent item={itemContent} />
+      </ImageBackground>
+    </View>
+  );
+};
