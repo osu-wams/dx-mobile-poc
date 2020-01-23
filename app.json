@@ -1,17 +1,28 @@
 {
-  "name": "ReactSC",
-  "displayName": "EXPO SC",
   "expo": {
-    "name": "ReactSC",
-    "slug": "expo-template-bare",
-    "privacy": "unlisted",
+    "name": "dx-mobile",
+    "slug": "dx-mobile",
+    "version": "0.1.0",
+    "privacy": "public",
     "sdkVersion": "36.0.0",
-    "version": "1.0.0",
-    "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": ["ios", "android", "web"],
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ff0000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "ts", "tsx", "svg"]
+      "sourceExts": ["js", "json", "ts", "tsx", "jsx", "svg"]
     }
   }
 }
