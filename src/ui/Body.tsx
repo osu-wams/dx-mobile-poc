@@ -1,12 +1,17 @@
 import styled from 'styled-components/native';
-import { ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 
-const Body = styled(ScrollView)`
+const Body = styled.ScrollView`
   /* border-top: 1px solid #e9e5e4; */
   background-color: #f7f5f5;
-  padding: ${Constants.statusBarHeight}px 10px 20px;
+  padding: 0 10px 20px;
   color: #fff;
 `;
 
-export { Body };
+const AppWrapper = styled.View`
+  flex: 1;
+  padding-top: ${Constants.statusBarHeight}px;
+  background-color: #f7f5f5;
+`;
+
+export { AppWrapper, Body };

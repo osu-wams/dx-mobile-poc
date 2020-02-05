@@ -2,9 +2,12 @@ import React from 'react';
 import { faHome, faToolbox, faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { createAppContainer } from 'react-navigation';
+import { StatusBar } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { BetaPage } from './src/pages/BetaPage';
+import { Resources } from './src/pages/Resources';
 import { EmployeeDashboardPage } from './src/pages/EmployeeDashboardPage';
+import { AppWrapper } from './src/ui/Body';
 
 interface ITabBarIcon {
   tintColor: string;
@@ -20,7 +23,7 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
     Resources: {
-      screen: BetaPage,
+      screen: Resources,
       navigationOptions: {
         tabBarLabel: 'Resources',
         tabBarIcon: ({ tintColor }: ITabBarIcon) => <FontAwesomeIcon icon={faToolbox} size={24} color={tintColor} />,
@@ -44,4 +47,11 @@ const TabNavigator = createBottomTabNavigator(
   },
 );
 
-export default createAppContainer(TabNavigator);
+const AppContainer = createAppContainer(TabNavigator);
+
+export default () => (
+  <AppWrapper>
+    <StatusBar barStyle="dark-content" />
+    <AppContainer />
+  </AppWrapper>
+);

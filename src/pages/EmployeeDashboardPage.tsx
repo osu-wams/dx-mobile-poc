@@ -66,7 +66,7 @@ const EmployeeDashboardPage = () => {
           <FontAwesomeIcon icon={faClipboardListCheck} size={24} />
           <CardTitle>IT System Status</CardTitle>
         </CardHeaderWrapper>
-        <CardBodyWrapper expanded="true">
+        <CardBodyWrapper expanded>
           <CardBodyCenter>
             <Systems height={160} width={160} />
 
