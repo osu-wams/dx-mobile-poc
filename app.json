@@ -1,28 +1,26 @@
 {
   "expo": {
-    "name": "dx-mobile",
-    "slug": "dx-mobile",
-    "version": "0.1.0",
+    "name": "OSUDX",
+    "slug": "OSUDX",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
+    "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ff0000"
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
-    },
-    "packagerOpts": {
-      "config": "metro.config.js",
-      "sourceExts": ["js", "json", "ts", "tsx", "jsx", "svg"]
+      "supportsTablet": true,
+      "bundleIdentifier": "com.piattdev.OSUDX",
+      "buildNumber": "1.0.0"
     }
   }
 }
