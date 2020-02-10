@@ -10,9 +10,8 @@ import { BetaPage } from './src/pages/BetaPage';
 import { Resources } from './src/pages/Resources';
 import { EmployeeDashboardPage } from './src/pages/EmployeeDashboardPage';
 import { AppWrapper } from './src/ui/Body';
-import Constants from 'expo-constants';
-import * as WebBrowser from 'expo-web-browser';
-import { APP_HOST } from './src/constants';
+import { APP_HOST, AUTH_STORE_KEY } from './src/constants';
+import { startAuthSession, getTokenFromStore } from './src/utils/auth';
 
 interface ITabBarIcon {
   tintColor: string;
@@ -54,34 +53,14 @@ const TabNavigator = createBottomTabNavigator(
 
 export const UserContext = React.createContext(null);
 const AppContainer = createAppContainer(TabNavigator);
-const linkingUrl = Constants.linkingUrl;
 
 export default () => {
   const [user, setUser] = useState(null);
   const [auth, setAuth] = useState(null);
 
-  const persistToken = (o: { type: string; url?: string }) => {
-    const matches = o?.url?.match('^.*token=(.*)$');
-    if (matches) {
-      const token = matches[1];
-      setAuth(token);
-    }
-  };
-
-  const startAuthSession = async () => {
-    try {
-      const result = await WebBrowser.openAuthSessionAsync(`${APP_HOST}/login?redirectUri=${linkingUrl}`, linkingUrl);
-      if (__DEV__) console.debug(`startAuthSession result: ${JSON.stringify(result)}`);
-      persistToken(result);
-    } catch (e) {
-      // ! Dead-end for the user, handle this with a meaningful error UI
-      console.error(e);
-    }
-  };
-
   const getUser = async () => {
     const response = await axios.get('/api/user');
-    if (__DEV__) console.debug(response.data);
+    if (__DEV__) console.debug(`getUser: ${JSON.stringify(response.data)}`);
     setUser(response.data);
   };
 
@@ -93,6 +72,11 @@ export default () => {
         authorization: auth,
       };
       getUser();
+    } else {
+      getTokenFromStore(AUTH_STORE_KEY).then(token => {
+        console.log(`App.useEffect getTokenFromStore: ${token}`);
+        if (token) setAuth(token);
+      });
     }
   }, [auth]);
 
@@ -100,7 +84,7 @@ export default () => {
     <UserContext.Provider value={user}>
       <AppWrapper>
         <StatusBar barStyle="dark-content" />
-        {!auth && <Login authHandler={startAuthSession} />}
+        {!auth && <Login authHandler={() => startAuthSession(setAuth)} />}
         {auth && <AppContainer />}
       </AppWrapper>
     </UserContext.Provider>
