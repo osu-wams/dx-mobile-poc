@@ -30,7 +30,7 @@ import { Body } from '../ui/Body';
 import { Footer } from '../ui/Footer';
 import { BigLink, BigLinkText } from '../ui/BigLink';
 import Systems from '../../assets/systems-status-operational.svg';
-import { UserContext } from '../../App';
+import { UserContext } from '../utils/contexts';
 
 const EmployeeDashboardPage = () => {
   const userContext = useContext(UserContext);
