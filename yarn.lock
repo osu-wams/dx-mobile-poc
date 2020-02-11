@@ -1161,22 +1161,22 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@osu-wams/hooks@^1.0.4":
-  version "1.0.4"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.4/5e86ff51d00a1cd670906c4368f3d227621a4cdfe6418201718cf971ee4bae47#d66fc3b06f81830e3ab5b68b1155452a79341ad2"
-  integrity sha512-J9d9VCPsK8lNxRQ0vt9oU0rRLNBKKnrdBwNmWjm4jcbqNeY3DOIPWaTyHf8d6zLo7t+41N6UMyQmKPuThm/YxQ==
+"@osu-wams/hooks@^1.0.5":
+  version "1.0.5"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.5/391e0f5404f10445e6dccdc6155c548372a69526807cf82698ff30a97f1b3df9#2b91ced32b007119dbf8401340a4d396ade70ecc"
+  integrity sha512-KBln8CIxpPKzAOAXEJVtZgvkumDr9V8dsYZhAuNuqhHfdF1N9BwCiLhVLGh7dpUSVH8fgW5HYs4b0/paPYyFNg==
   dependencies:
-    "@osu-wams/lib" "^0.1.3"
+    "@osu-wams/lib" "^0.1.4"
     "@osu-wams/utils" "^0.0.2"
     axios "^0.19.1"
     react "^16.12.0"
     react-dom "^16.12.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@^0.1.3":
-  version "0.1.3"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.3/aaece779fdab38d040749e4c708e6b32575249a1fd0ff9d1c312d89a08c9ef5a#3b556484399cf71a34365be6ea823326eb2d724f"
-  integrity sha512-7q1gdLAtFWrs9xAHt/gEoqSjyp09NWEKYY/kNKy0iWEz3O0KJvs3gD4A0N1HfQfiV7Dyz9S0CqruMKj7OaTygw==
+"@osu-wams/lib@^0.1.4":
+  version "0.1.4"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.4/37155c0e55b95570e46d98715f2e239148081c926f675afd4bab03943d8ea009#2c5714bda85ee3c43be1c50607e56644d062f0a6"
+  integrity sha512-tJqaiH1UeNf5SOOjyBUaZGPx/22NrU/rvOMQ+VGyih4xKDn+8yT3QUUM5MVdrOdygzkTkeO/D/bBDaxoifYUBA==
 
 "@osu-wams/utils@^0.0.2":
   version "0.0.2"
@@ -6821,15 +6821,6 @@ react@^16.12.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
   integrity sha512-fglqy3k5E+81pA8s+7K0/T3DBCF0ZDOher1elBFzF7O6arXJgzyu/FW+COxFvAWXJoJN9KIZbT2LXlukwphYTA==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-
-react@~16.9.0:
-  version "16.9.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.9.0.tgz#40ba2f9af13bc1a38d75dbf2f4359a5185c4f7aa"
-  integrity sha512-+7LQnFBwkiw+BobzOF6N//BdoNw0ouwmSJTEm9cglOOmsg/TMiFHZLe2sEoN5M7LgJTj9oHH0gxklfnQe66S1w==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
