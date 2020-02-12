@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   faCogs,
@@ -30,8 +30,10 @@ import { Body } from '../ui/Body';
 import { Footer } from '../ui/Footer';
 import { BigLink, BigLinkText } from '../ui/BigLink';
 import Systems from '../../assets/systems-status-operational.svg';
+import { UserContext } from '../utils/contexts';
 
 const EmployeeDashboardPage = () => {
+  const userContext = useContext(UserContext);
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => setExpanded(!expanded);
   const osu = '#d73f09';
@@ -40,6 +42,7 @@ const EmployeeDashboardPage = () => {
     <Body>
       <Header pageTitle="Employee Dashboard" />
       <CardBase>
+        {userContext && <BigLinkText>{userContext.email} logged in.</BigLinkText>}
         <CardHeaderWrapper>
           <FontAwesomeIcon icon={faAnalytics} size={24} />
           <CardTitle>Employee Tools</CardTitle>

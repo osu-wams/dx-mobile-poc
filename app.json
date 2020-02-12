@@ -10,8 +10,7 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ff0000"
+      "resizeMode": "contain"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,6 +22,16 @@
     "packagerOpts": {
       "config": "metro.config.js",
       "sourceExts": ["js", "json", "ts", "tsx", "jsx", "svg"]
+    },
+    "scheme": "dx-mobile",
+    "android": {
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [{ "scheme": "dx-mobile" }],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     }
   }
 }

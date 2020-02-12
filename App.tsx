@@ -1,57 +1,47 @@
-import React from 'react';
-import { faHome, faToolbox, faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { createAppContainer } from 'react-navigation';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { StatusBar } from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { BetaPage } from './src/pages/BetaPage';
-import { Resources } from './src/pages/Resources';
-import { EmployeeDashboardPage } from './src/pages/EmployeeDashboardPage';
+import Login from './src/features/Login';
 import { AppWrapper } from './src/ui/Body';
+import AppContainer from './AppContainer';
+import { APP_HOST, AUTH_STORE_KEY } from './src/constants';
+import { startAuthSession, getTokenFromStore } from './src/utils/auth';
+import { UserContext } from './src/utils/contexts';
 
-interface ITabBarIcon {
-  tintColor: string;
-}
+export default () => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [hasAuth, setHasAuth] = useState(false);
 
-const TabNavigator = createBottomTabNavigator(
-  {
-    Home: {
-      screen: EmployeeDashboardPage,
-      navigationOptions: {
-        tabBarLabel: 'Home',
-        tabBarIcon: ({ tintColor }: ITabBarIcon) => <FontAwesomeIcon icon={faHome} size={24} color={tintColor} />,
-      },
-    },
-    Resources: {
-      screen: Resources,
-      navigationOptions: {
-        tabBarLabel: 'Resources',
-        tabBarIcon: ({ tintColor }: ITabBarIcon) => <FontAwesomeIcon icon={faToolbox} size={24} color={tintColor} />,
-      },
-    },
-    Beta: {
-      screen: BetaPage,
-      navigationOptions: {
-        tabBarLabel: 'Beta',
-        tabBarIcon: ({ tintColor }: ITabBarIcon) => (
-          <FontAwesomeIcon icon={faFlaskPotion} size={24} color={tintColor} />
-        ),
-      },
-    },
-  },
-  {
-    tabBarOptions: {
-      activeTintColor: '#d73f09',
-      inactiveTintColor: 'gray',
-    },
-  },
-);
+  useEffect(() => {
+    axios.defaults.baseURL = APP_HOST;
 
-const AppContainer = createAppContainer(TabNavigator);
+    /**
+     * Retrieve the token from the local store if it exists, otherwise the Login component
+     * is rendered which gives the user the SAML authentication flow.
+     *
+     * The hasAuth and token state eliminates a race-condition that React has in executing the hooks
+     * in AppContainer prior to having set the axios authorization header. Setting hasAuth to true after
+     * the axios authorization header provides all future axios requests to use the token for authentication.
+     */
+    if (token) {
+      axios.defaults.headers.common.Authorization = token;
+      setHasAuth(true);
+    } else {
+      getTokenFromStore(AUTH_STORE_KEY).then(token => {
+        if (__DEV__) console.log(`App.useEffect getTokenFromStore: ${token}`);
+        if (token) setToken(token);
+      });
+    }
+  }, [token]);
 
-export default () => (
-  <AppWrapper>
-    <StatusBar barStyle="dark-content" />
-    <AppContainer />
-  </AppWrapper>
-);
+  return (
+    <UserContext.Provider value={user}>
+      <AppWrapper>
+        <StatusBar barStyle="dark-content" />
+        {!token && <Login authHandler={() => startAuthSession(setToken)} />}
+        {hasAuth && <AppContainer userHandler={setUser} />}
+      </AppWrapper>
+    </UserContext.Provider>
+  );
+};
