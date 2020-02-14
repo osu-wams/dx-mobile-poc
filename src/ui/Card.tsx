@@ -11,6 +11,13 @@ const CardBodyWrapper: React.FC<ICardBodyWrapper> = ({ expanded, children, ...pr
   </CardBody>
 );
 
+/* eslint-disable react/prop-types */
+const CardBodyWrapperFixedHeight: React.FC<ICardBodyWrapper> = ({ expanded, children, ...props }) => (
+  <CardBodyFixedHeight expanded={expanded} {...props}>
+    {children}
+  </CardBodyFixedHeight>
+);
+
 const osu = '#d73f09';
 
 const CardBase = styled.View`
@@ -54,6 +61,14 @@ const CardBody = styled.View<ICardBodyWrapper>`
   overflow: hidden;
 `;
 
+const CardBodyFixedHeight = styled.View<ICardBodyWrapper>`
+  border-color: #e9e5e4;
+  border-top-width: ${props => (props.expanded ? '1px' : 0)};
+  padding: ${props => (props.expanded ? '15px' : 0)};
+  height: ${props => (props.expanded ? '220px' : 0)};
+  overflow: hidden;
+`;
+
 const CardBodyTitle = styled.Text`
   color: ${osu};
   font-size: 18px;
@@ -93,4 +108,5 @@ export {
   CardBodySubTitle,
   CardBodyWrapper,
   CardHeaderWrapper,
+  CardBodyWrapperFixedHeight,
 };

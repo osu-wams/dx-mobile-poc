@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { faHome, faToolbox, faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
+import { faHome, faToolbox, faFlaskPotion, faGamepad } from '@fortawesome/pro-light-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { BetaPage } from './src/pages/BetaPage';
 import { Resources } from './src/pages/Resources';
+import { PlaygroundPage } from './src/pages/PlaygroundPage';
 import { EmployeeDashboardPage } from './src/pages/EmployeeDashboardPage';
 import { useUser } from '@osu-wams/hooks';
 
@@ -35,6 +36,13 @@ const TabNavigator = createBottomTabNavigator(
         tabBarIcon: ({ tintColor }: ITabBarIcon) => (
           <FontAwesomeIcon icon={faFlaskPotion} size={24} color={tintColor} />
         ),
+      },
+    },
+    Playground: {
+      screen: PlaygroundPage,
+      navigationOptions: {
+        tabBarLabel: 'Playground',
+        tabBarIcon: ({ tintColor }: ITabBarIcon) => <FontAwesomeIcon icon={faGamepad} size={24} color={tintColor} />,
       },
     },
   },
