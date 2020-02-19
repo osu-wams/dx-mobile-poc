@@ -973,6 +973,13 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.26"
 
+"@fortawesome/react-fontawesome@^0.1.8":
+  version "0.1.8"
+  resolved "https://npm.fontawesome.com/@fortawesome/react-fontawesome/-/0.1.8/react-fontawesome-0.1.8.tgz#cb6d4dd3aeec45b6ff2d48c812317a6627618511"
+  integrity sha512-I5h9YQg/ePA3Br9ISS18fcwOYmzQYDSM1ftH03/8nHkiqIVHtUyQBw482+60dnzvlr82gHt3mGm+nDUp159FCw==
+  dependencies:
+    prop-types "^15.5.10"
+
 "@fortawesome/react-native-fontawesome@^0.2.0":
   version "0.2.0"
   resolved "https://npm.fontawesome.com/@fortawesome/react-native-fontawesome/-/0.2.0/react-native-fontawesome-0.2.0.tgz#cbb46ffff17cada5dcb9386af792785e89c358b8"

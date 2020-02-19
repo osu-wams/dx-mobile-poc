@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components/native';
-import { FlatList, ImageBackground, Text, View } from 'react-native';
-import { ListItem } from 'react-native-elements';
+// import { styled, ThemeContext } from '../theme';
+import { FlatList, Image, ImageBackground, Text, View } from 'react-native';
+// import { ListItem } from 'react-native-elements';
 import {
   CardBase,
   CardHeaderWrapper,
@@ -19,9 +20,35 @@ import {
   faChevronDown,
   faClipboardListCheck,
   faGraduationCap,
+  faFog,
+  faFileCertificate,
+  faFolders,
+  faListAlt,
+  faCommentsAlt,
+  faBookReader,
+  faBooks,
+  faFileAlt,
+  faBadgeCheck,
+  faMoneyCheckEditAlt,
+  faEnvelopeOpenDollar,
+  faHandHoldingUsd,
+  faAppleCrate,
+  faBriefcase,
 } from '@fortawesome/pro-light-svg-icons';
+import { useResourcesByQueue } from '@osu-wams/hooks';
+import { Types } from '@osu-wams/lib';
+import { IconLookup } from './resources/resources-utils';
+import { fal } from '@fortawesome/pro-light-svg-icons';
+import { IconDefinition, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
 
-export default () => {
+// import boxSync from '../assets/logo-box-sync.png';
+// import canvasLogo from '../assets/logo-canvas.png';
+// import gDrive from '../assets/logo-drive.png';
+// import gMail from '../assets/logo-gmail.png';
+// import zoom from '../assets/logo-zoom.png';
+
+export default props => {
   const [data, setData] = useState([
     { icon: faGraduationCap, title: 'Test1' },
     { icon: faCogs, title: 'Test2' },
@@ -31,24 +58,71 @@ export default () => {
     { icon: faClipboardListCheck, title: 'Test3' },
   ]);
 
+  const res = useResourcesByQueue(props.cat);
+  const [resources, setResources] = useState<Types.Resource[]>([]);
+
   useEffect(() => {});
+
+  useEffect(() => {
+    if (!res.loading) {
+      const resourcesToUse = res.data?.items;
+      // const resourcesToUse = res.data?.items?.filter(r => hasAudience(user.data, r));
+      setResources(resourcesToUse);
+    }
+    // }, [res.data, res.loading, user.data, user.loading]);
+  }, [res.data, res.loading]);
+
+  const getFontAwesomeForString = iconName => {
+    console.log(iconName);
+    const iconMap = {
+      //academic
+      'file-certificate': faFileCertificate,
+      folders: faFolders,
+      'list-alt': faListAlt,
+      'comments-alt': faCommentsAlt,
+      'book-reader': faBookReader,
+      books: faBooks,
+      'file-alt': faFileAlt,
+      'badge-check': faBadgeCheck,
+      //financial
+      'money-check-edit-alt': faMoneyCheckEditAlt,
+      'envelope-open-dollar': faEnvelopeOpenDollar,
+      'hand-holding-usd': faHandHoldingUsd,
+      'apple-crate': faAppleCrate,
+      briefcase: faBriefcase,
+    };
+
+    if (iconName !== undefined) {
+      const iconSplit = iconName.split('.');
+      if (iconSplit[0] === 'fal' || iconSplit[0] === 'fab') {
+        const faIcon = iconMap[iconSplit[1]] ?? faGraduationCap;
+        return <FontAwesomeIcon icon={faIcon} size={24} />;
+      } else if (iconSplit[0] === 'osu') {
+        return <Image style={{ width: 24, height: 24 }} source={logoMapping[iconSplit[1]]} />;
+      }
+    }
+
+    return <FontAwesomeIcon icon={faGraduationCap} size={24} />;
+  };
 
   return (
     <>
       <CardBase>
         <CardHeaderWrapper>
           <FontAwesomeIcon icon={faGraduationCap} size={24} />
-          <CardTitle>Academic Resources</CardTitle>
+          <CardTitle>{props.cat} Resources</CardTitle>
         </CardHeaderWrapper>
 
         <CardBodyWrapperFixedHeight expanded>
           <FlatList
-            data={data}
+            data={resources}
             renderItem={({ item }) => (
               <CardHeaderWrapper>
-                <FontAwesomeIcon icon={item.icon} size={24} />
+                {/* {console.log(item)} */}
+                {getFontAwesomeForString(item.iconName)}
                 <CardTitle>{item.title}</CardTitle>
               </CardHeaderWrapper>
+              // <></>
             )}
           />
         </CardBodyWrapperFixedHeight>
@@ -56,6 +130,13 @@ export default () => {
     </>
   );
 };
+
+/*
+              <CardHeaderWrapper>
+                <FontAwesomeIcon icon={item.icon} size={24} />
+                <CardTitle>{item.title}</CardTitle>
+              </CardHeaderWrapper>
+*/
 
 /*
         <CardBodyWrapper expanded={expanded}>
@@ -90,6 +171,18 @@ export default () => {
 //     </>
 //   );
 // };
+
+// const ResourceImg = styled.img`
+//   width: 3rem;
+// `;
+
+const logoMapping = {
+  'logo-box-sync': require('../assets/logo-box-sync.png'),
+  'logo-canvas': require('../assets/logo-canvas.png'),
+  'logo-drive': require('../assets/logo-drive.png'),
+  'logo-gmail': require('../assets/logo-gmail.png'),
+  'logo-zoom': require('../assets/logo-zoom.png'),
+};
 
 const EventCardBody = styled.View`
   :link,
